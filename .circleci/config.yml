@@ -6,8 +6,16 @@ jobs:
       - image: cimg/base:stable 
     steps:
       - run: echo hola
+  despidete:
+    docker: 
+      - image: cimg/base:stable 
+    steps:
+      - run: echo pre adios
+      - run: echo pre adios
+      - run: echo post adios
 
 workflows:
   hello:
     jobs:
       - saluda
+      - despidete
