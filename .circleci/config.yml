@@ -2,8 +2,8 @@ version: 2.1
 
 jobs:
   saluda:
-    docker: 
-      - image: ubuntu:latest
+    machine: 
+      - image: ubuntu-2204:2022.10.2
     steps:
       - run: echo hola 
 
