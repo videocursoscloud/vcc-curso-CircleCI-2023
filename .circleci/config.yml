@@ -11,7 +11,7 @@ jobs:
       - image: cimg/base:stable 
     steps:
       - run: echo pre adios
-      - run: echo pre adios
+      - run: echo adios
       - run: echo post adios
 
 workflows:
