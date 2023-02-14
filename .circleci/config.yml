@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   saluda:
     docker: 
-      - image: cimg/base:stable
+      - image: ubuntu:latest
     steps:
       - run: echo hola 
 
