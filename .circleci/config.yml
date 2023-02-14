@@ -14,8 +14,11 @@ jobs:
 workflows:
   workflow1:
     jobs:
-      - saluda
+      - saluda:
+          name: saluda_miguel
+
   workflow2:
     jobs:
       - saluda:
+          name: saluda_juan
           nombre: juan
