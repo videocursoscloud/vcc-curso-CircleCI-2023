@@ -2,7 +2,6 @@ version: 2.1
 
 jobs:
   saluda:
-    parameters:
     docker: 
       - image: cimg/base:stable 
     steps:
@@ -16,23 +15,7 @@ jobs:
       - run: echo post adios
 
 workflows:
-  workflow1:
+  hello:
     jobs:
       - saluda
       - despidete
-  workflow2:
-    jobs:
-      - saluda
-      - despidete:
-          requires: 
-            - saluda
-  workflow3:
-    jobs:
-      - saluda
-      - approval:
-          type: approval
-          requires: 
-            - saluda
-      - despidete:
-          requires: 
-            - approval
