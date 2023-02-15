@@ -1,0 +1,13 @@
+version: 2.1
+
+jobs:
+  saluda:
+    machine: 
+      - image: ubuntu-2204:2022.10.2
+    steps:
+      - run: echo hola 
+
+workflows:
+  workflow1:
+    jobs:
+      - saluda
