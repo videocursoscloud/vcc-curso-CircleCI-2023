@@ -11,4 +11,6 @@ jobs:
 workflows:
   workflow1:
     jobs:
-      - saluda
+      - saluda:
+          context: miprueba
+             
