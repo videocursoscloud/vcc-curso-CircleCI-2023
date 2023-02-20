@@ -4,6 +4,8 @@ jobs:
   saluda:
     docker: 
       - image: ubuntu:latest
+    environment:
+      NOMBRE: miguel
     steps:
       - run: echo hola $NOMBRE
       - run: env
