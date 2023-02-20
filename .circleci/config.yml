@@ -1,34 +1,14 @@
 version: 2.1
 
-commands:
-  dime_la_hora_y_espera:
-    parameters:
-      tiempo:
-        type: integer
-        default: 10
-    steps:
-      - run: date && sleep << parameters.tiempo >>
-
 jobs:
   saluda:
     docker: 
       - image: ubuntu:latest
     steps:
-      - dime_la_hora_y_espera
-      - run: echo hola 
-      - dime_la_hora_y_espera
-  despidete:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - dime_la_hora_y_espera:
-          tiempo: 20
-      - run: echo adios
-      - dime_la_hora_y_espera:
-          tiempo: 20
+      - run: echo hola $NOMBRE
+      - run: env
 
 workflows:
   workflow1:
     jobs:
       - saluda
-      - despidete
