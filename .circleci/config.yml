@@ -7,7 +7,10 @@ jobs:
     environment:
       NOMBRE: miguel
     steps:
-      - run: echo hola $NOMBRE
+      - run: 
+          command: echo hola $NOMBRE
+          environment:
+            NAME: jorge
       - run: env
 
 workflows:
