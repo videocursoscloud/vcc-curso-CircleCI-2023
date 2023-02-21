@@ -24,5 +24,8 @@ jobs:
 workflows:
   workflow1:
     jobs:
-      - install-all
+      - install-all:
+          context: aws-access
+
+          
              
