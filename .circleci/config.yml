@@ -1,21 +1,20 @@
 version: 2.1
 
+
+commands:
+  install-aws-cli:
+    steps:
+      - run: echo instalando
+
 jobs:
-  saluda:
+  dependencies:
     docker: 
       - image: ubuntu:latest
-#    environment:
-#      NOMBRE: miguel
     steps:
-      - run: 
-          environment:
-            NOMBRE: jorge
-          command: echo hola $NOMBRE
-      - run: env
+      - install-aws-cli
 
 workflows:
   workflow1:
     jobs:
-      - saluda
-#          context: miprueba
+      - dependencies
              
