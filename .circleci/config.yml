@@ -2,19 +2,23 @@ version: 2.1
 
 
 commands:
+  install-prereq:
+    steps:
+      - run: apt update && apt install curl unzip groff -y
   install-aws-cli:
     steps:
-      - run: echo instalando
+      - run: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install && rm -rf awscliv2.zip aws
 
 jobs:
-  dependencies:
+  install-all:
     docker: 
       - image: ubuntu:latest
     steps:
+      - install-prereq
       - install-aws-cli
 
 workflows:
   workflow1:
     jobs:
-      - dependencies
+      - install-all
              
