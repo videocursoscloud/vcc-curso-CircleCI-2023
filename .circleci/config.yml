@@ -19,6 +19,7 @@ jobs:
     steps:
       - install-prereq
       - install-aws-cli
+      - get-caller-identity
 
 workflows:
   workflow1:
