@@ -1,6 +1,6 @@
 version: 2.1
 
-command:
+commands:
   install-prereq:
     steps:
      - run: apt update && apt install curl unzip groff less -y
