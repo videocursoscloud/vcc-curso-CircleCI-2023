@@ -4,7 +4,6 @@ commands:
   install-aws-cli:
     steps:
       - run: echo instalando aws cli
-      - run: ls -la
 
 jobs:
   install-dependencies:
@@ -13,6 +12,7 @@ jobs:
     steps:
       - install-aws-cli
       - checkout
+      - run: find
 
 workflows:
   workflow1:
