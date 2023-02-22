@@ -4,7 +4,9 @@ commands:
   install-prereq:
     steps:
      - run: apt update && apt install curl unzip groff less -y
-
+  install-aws-cli:
+    steps:
+      - run: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install && rm awscliv2.zip aws 
 jobs:
   install-all:
     docker:
