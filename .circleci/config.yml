@@ -12,7 +12,7 @@ jobs:
     steps:
       - install-aws-cli
       - checkout:
-          name: Bajando el codigo fuente
+          path: micodigo/
       - run: find
 
 workflows:
