@@ -1,0 +1,14 @@
+version: 2.1
+
+jobs:
+  saluda:
+    docker: 
+      - image: ubuntu:latest
+    steps:
+      - run: echo hola $nombre
+
+workflows:
+  workflow1:
+    jobs:
+      - saluda
+             

@@ -1,0 +1,22 @@
+version: 2.1
+
+commands:
+  install-aws-cli:
+    steps:
+      - run: echoa instalando aws cli
+
+jobs:
+  install-dependencies:
+    docker: 
+      - image: cimg/base:stable
+    steps:
+      - checkout:
+          path: micodigo/
+      - run: find
+      - install-aws-cli
+
+workflows:
+  workflow1:
+    jobs:
+      - install-dependencies
+             
