@@ -10,6 +10,7 @@ commands:
   get-caller-identity:
     steps:
       - run: aws sts get-caller-identity
+
 jobs:
   install-all:
     docker:
