@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  saluda:
+    docker: 
+      - image: ubuntu:latest
+    steps:
+      - run: 
+          command: echo hola $NOMBRE
+
+workflows:
+  workflow1:
+    jobs:
+      - saluda:
+          context: leccion-contextos2
+             
