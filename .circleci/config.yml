@@ -6,14 +6,18 @@ commands:
      - run: apt update && apt install curl unzip groff less -y
   install-aws-cli:
     steps:
-      - run: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install && rm -rf awscliv2.zip aws 
+      - run: mkdir mybins -p && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install && cp /usr/local/bin/aws mybins/ && rm -rf awscliv2.zip aws 
+      - persist_to_workspace:
+          root: mybins
+          paths:
+            - aws
   install-eksctl:
     steps:
-      - run: curl https://github.com/weaveworks/eksctl/releases/download/v0.132.0-rc.0/eksctl_Linux_amd64.tar.gz -o eksctl.tar.gz -L && tar xvzf eksctl.tar.gz && install eksctl /usr/local/bin/eksctl &&  rm eksctl.tar.gz && eksctl version
+      - run: mkdir mybins -p && curl https://github.com/weaveworks/eksctl/releases/download/v0.132.0-rc.0/eksctl_Linux_amd64.tar.gz -o eksctl.tar.gz -L && tar xvzf eksctl.tar.gz && mv eksctl mybins/eksctl &&  rm eksctl.tar.gz
       - persist_to_workspace:
-          root: workspace
+          root: mybins
           paths:
-            - mybins/
+            - eksctl
 
   get-caller-identity:
     steps:
