@@ -19,7 +19,7 @@ jobs:
     docker:
       - image: ubuntu:latest
     steps:
-      - install-prereq
+      - install-prereq-aws-cli
       - install-aws-cli
       - install-eksctl
       - get-caller-identity
