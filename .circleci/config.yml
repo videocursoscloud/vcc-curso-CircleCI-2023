@@ -10,11 +10,18 @@ commands:
   install-eksctl:
     steps:
       - run: curl https://github.com/weaveworks/eksctl/releases/download/v0.132.0-rc.0/eksctl_Linux_amd64.tar.gz -o eksctl.tar.gz -L && tar xvzf eksctl.tar.gz && install eksctl /usr/local/bin/eksctl &&  rm eksctl.tar.gz && eksctl version
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - mybins/
+
   get-caller-identity:
     steps:
       - run: aws sts get-caller-identity
   eksctl_v:
     steps:
+      - attach_workspace:
+          at: mybins/
       - run: eksctl version
 jobs:
   update-cluster:
