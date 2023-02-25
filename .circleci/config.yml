@@ -36,4 +36,8 @@ workflows:
     jobs:
       - install-all:
           context: aws-access
+      - update-cluster:
+          context: aws-access
+          requires: 
+            - install-all
              
