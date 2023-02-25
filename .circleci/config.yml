@@ -13,8 +13,15 @@ commands:
   get-caller-identity:
     steps:
       - run: aws sts get-caller-identity
-
+  eksctl_v:
+    steps:
+      - run: eksctl version
 jobs:
+  update-cluster:
+    docker:
+      - image: ubuntu:latest
+    steps:
+      - eksctl_v
   install-all:
     docker:
       - image: ubuntu:latest
@@ -25,7 +32,7 @@ jobs:
       - get-caller-identity
 
 workflows:
-  workflow1:
+  cluster-management:
     jobs:
       - install-all:
           context: aws-access
