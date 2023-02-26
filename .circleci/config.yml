@@ -22,14 +22,12 @@ commands:
 
   get-caller-identity:
     steps:
-      - run: export PATH=$PATH:/root/project/mybins/
-      - run: aws sts get-caller-identity
+      - run: PATH=$PATH:/root/project/mybins/ aws sts get-caller-identity
   eksctl_v:
     steps:
       - attach_workspace:
           at: mybins/
-      - run: export PATH=$PATH:/root/project/mybins/
-      - run: eksctl version
+      - run: PATH=$PATH:/root/project/mybins/ eksctl version
 jobs:
   update-cluster:
     docker:
