@@ -45,6 +45,7 @@ jobs:
     docker:
       - image: ubuntu:latest
     steps:
+      - install-prereq-aws-cli
       - aws-eks/setup
   create-cluster-dry-run:
     docker:
