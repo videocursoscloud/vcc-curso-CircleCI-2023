@@ -15,9 +15,16 @@ jobs:
       - image: cimg/python:3.11.2
     steps:
 #      - install-prereq-aws-cli
+      - checkout
       - aws-eks/setup
-      - aws-eks/create-cluster:
-          config-file: whatever
+#      - aws-eks/create-cluster:
+#          config-file: vcc-eksctl-config.yaml
+#      - create-deployment:
+#          cluster-name: vcc-eksctl-24
+#          requires:
+#            - aws-eks/create-cluster
+#      - aws-eks/delete-cluster:
+#          config-file: vcc-eksctl-config.yaml
 
 workflows:
   cluster-management:
