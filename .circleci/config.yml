@@ -7,59 +7,15 @@ commands:
   install-prereq-aws-cli:
     steps:
      - run: apt update && apt install curl unzip groff less -y
-  install-aws-cli:
-    steps:
-      - run: mkdir mybins -p && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install -b /root/project/mybins -i /root/project/mybins/ && rm -rf awscliv2.zip aws 
-      - persist_to_workspace:
-          root: mybins
-          paths:
-            - aws
-            - v2
-  install-eksctl:
-    steps:
-      - run: mkdir mybins -p && curl https://github.com/weaveworks/eksctl/releases/download/v0.132.0-rc.0/eksctl_Linux_amd64.tar.gz -o eksctl.tar.gz -L && tar xvzf eksctl.tar.gz && mv eksctl mybins/eksctl &&  rm eksctl.tar.gz
-      - persist_to_workspace:
-          root: mybins
-          paths:
-            - eksctl
 
-  get-caller-identity:
-    steps:
-      - run: 
-          name: aws get caller identity
-          command: |
-            export PATH=$PATH:/root/project/mybins
-            aws sts get-caller-identity
-  eksctl_create_dry_run:
-    steps:
-      - checkout
-      - attach_workspace:
-          at: mybins/
-      - run: 
-          name: eksctl
-          command: |
-            export PATH=$PATH:/root/project/mybins
-            eksctl create cluster --dry-run -f vcc-eksctl-config.yaml
+
 jobs:
   install-eksctl:
     docker:
-      - image: ubuntu:latest
+      - image: cimg/python:latest
     steps:
       - install-prereq-aws-cli
       - aws-eks/setup
-  create-cluster-dry-run:
-    docker:
-      - image: ubuntu:latest
-    steps:
-      - eksctl_create_dry_run
-  install-all:
-    docker:
-      - image: ubuntu:latest
-    steps:
-      - install-prereq-aws-cli
-      - install-aws-cli
-      - install-eksctl
-      - get-caller-identity
 
 workflows:
   cluster-management:
