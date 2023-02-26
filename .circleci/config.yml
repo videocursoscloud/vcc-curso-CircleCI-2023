@@ -1,4 +1,7 @@
 version: 2.1
+orbs:
+  aws-eks: circleci/aws-eks@2.2.0
+
 
 commands:
   install-prereq-aws-cli:
@@ -38,6 +41,11 @@ commands:
             export PATH=$PATH:/root/project/mybins
             eksctl create cluster --dry-run -f vcc-eksctl-config.yaml
 jobs:
+  install-eksctl:
+    docker:
+      - image: ubuntu:latest
+    steps:
+      - aws-eks/setup
   create-cluster-dry-run:
     docker:
       - image: ubuntu:latest
@@ -55,20 +63,8 @@ jobs:
 workflows:
   cluster-management:
     jobs:
-      - install-all:
-          context: aws-access
-      - create-cluster-dry-run:
-          context: aws-access
-          requires: 
-           - install-all
+      - install-eksctl:
+          name: install eksctl
+ #         context: aws-access
+#          config-file: whatever
              
-      - approve-create-cluster:
-          type: approval
-          requires: 
-           - create-cluster-dry-run
-             
-      - create-cluster-dry-run:
-          name: create-cluster
-          context: aws-access
-          requires: 
-           - approve-create-cluster
