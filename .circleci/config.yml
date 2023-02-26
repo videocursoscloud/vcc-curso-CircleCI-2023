@@ -12,7 +12,7 @@ commands:
 jobs:
   install-eksctl:
     docker:
-      - image: cimg/python:latest
+      - image: cimg/python:3.11.2
     steps:
       - install-prereq-aws-cli
       - aws-eks/setup
