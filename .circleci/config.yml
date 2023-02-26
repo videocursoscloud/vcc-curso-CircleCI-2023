@@ -29,9 +29,9 @@ commands:
             aws sts get-caller-identity
   eksctl_create_dry_run:
     steps:
+      - checkout
       - attach_workspace:
           at: mybins/
-      - checkout
       - run: 
           name: eksctl
           command: |
