@@ -10,18 +10,20 @@ commands:
 
 
 jobs:
-  install-eksctl:
+  create-cluster:
     docker:
       - image: cimg/python:3.11.2
     steps:
 #      - install-prereq-aws-cli
       - aws-eks/setup
+      - aws-eks/create-cluster:
+          config-file: whatever
 
 workflows:
   cluster-management:
     jobs:
-      - install-eksctl:
-          name: install eksctl
- #         context: aws-access
+      - create-cluster:
+          name: create cluster
+          context: aws-access
 #          config-file: whatever
              
