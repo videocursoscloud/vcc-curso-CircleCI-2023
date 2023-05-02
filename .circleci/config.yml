@@ -11,7 +11,7 @@ jobs:
       - aws-cli/setup
       - run: aws sts get-caller-identity
   docker:
-    executor: docker/docker
+    executor: docker/machine
     steps:
       - docker/install-docker
       - docker/build:
