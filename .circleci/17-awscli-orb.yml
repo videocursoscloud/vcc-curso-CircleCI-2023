@@ -2,9 +2,10 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@3.1.5
+  docker: circleci/docker@2.2.0
 
 jobs:
-  all:
+  aws:
     executor: aws-cli/default
     steps: 
       - aws-cli/setup
@@ -13,6 +14,9 @@ jobs:
 workflows:
   workflow1:
     jobs:
-      - all:
+      - aws:
           context: aws-access
-             
+      - docker/publish:
+          context: aws-access
+          image: miimagen
+          deploy: false
