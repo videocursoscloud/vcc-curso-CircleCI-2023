@@ -8,15 +8,17 @@ jobs:
   aws:
     executor: aws-cli/default
     steps: 
-      - aws-cli/setup
+      - aws-cli/setup:
+          role-session-name: Circleci-Session
+          role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
       - run: aws sts get-caller-identity
 
 workflows:
   workflow1:
     jobs:
       - aws:
-          context: aws-access
+          context: dummy
       - docker/publish:
-          context: aws-access
+          context: dummy
           image: miimagen
           deploy: false
