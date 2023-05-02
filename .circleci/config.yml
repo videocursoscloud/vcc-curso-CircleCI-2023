@@ -3,13 +3,13 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@3.1.5
   docker: circleci/docker@2.2.0
-
+  aws-configure-credentials-oidc: ovotech/aws-configure-credentials-oidc@1.0.1
 jobs:
   aws:
     executor: aws-cli/default
     steps: 
-      - aws-cli/setup:
-          role-session-name: Circleci-Session
+      - aws-cli/setup
+      - aws-configure-credentials-oidc/aws-configure-credentials:
           role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
       - run: aws sts get-caller-identity
 
