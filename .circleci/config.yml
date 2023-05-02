@@ -20,4 +20,6 @@ workflows:
     jobs:
       - aws:
           context: aws-access
+      - docker:
+          context: aws-access
              
