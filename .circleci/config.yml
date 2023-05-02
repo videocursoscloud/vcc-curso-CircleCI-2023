@@ -10,19 +10,13 @@ jobs:
     steps: 
       - aws-cli/setup
       - run: aws sts get-caller-identity
-  docker:
-    executor: docker/machine
-    steps:
-      - docker/install-docker
-      - checkout
-      - docker/build:
-          image: miimagen
 
 workflows:
   workflow1:
     jobs:
       - aws:
           context: aws-access
-      - docker:
+      - docker/publish:
           context: aws-access
+          image: miimagen
              
