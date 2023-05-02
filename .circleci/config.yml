@@ -8,9 +8,9 @@ jobs:
   aws:
     executor: aws-cli/default
     steps: 
-      - aws-cli/setup
       - aws-configure-credentials-oidc/aws-configure-credentials:
           role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
+#      - aws-cli/setup
       - run: aws sts get-caller-identity
 
 workflows:
