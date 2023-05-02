@@ -14,6 +14,8 @@ jobs:
     executor: docker/docker
     steps:
       - docker/install-docker
+      - docker/build:
+          name: miimagen
 
 workflows:
   workflow1:
