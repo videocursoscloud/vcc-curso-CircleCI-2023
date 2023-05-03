@@ -2,26 +2,19 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@3.1.5
-  docker: circleci/docker@2.2.0
-  aws-configure-credentials-oidc: ovotech/aws-configure-credentials-oidc@1.0.1
 jobs:
   aws:
     executor: aws-cli/default
     steps: 
       - aws-cli/install
-#      - aws-configure-credentials-oidc/aws-configure-credentials:
-#          role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
       - aws-cli/assume-role-with-web-identity:
           role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
           role-session-name: CCI-session
       - run: aws sts get-caller-identity
+      - run: aws s3 ls
 
 workflows:
   workflow1:
     jobs:
       - aws:
           context: dummy
-      - docker/publish:
-          context: dummy
-          image: miimagen
-          deploy: false
