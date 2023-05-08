@@ -24,6 +24,7 @@ jobs:
     steps:
       - kubernetes/install
       - eks/install-aws-iam-authenticator
+      - aws-cli/install
       - aws-cli/assume-role-with-web-identity:
           role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
           role-session-name: CCI-session
