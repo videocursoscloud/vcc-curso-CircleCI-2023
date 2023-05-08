@@ -34,6 +34,9 @@ jobs:
       - eks/update-kubeconfig-with-authenticator:
           cluster-authentication-role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
           cluster-name: "vcc-cci-eks-cci-${CIRCLE_BRANCH}"
+      - run:
+           name: get all
+           command: kubectl get all -A
   eks-plan:
     executor: aws-cli/default
     steps: 
