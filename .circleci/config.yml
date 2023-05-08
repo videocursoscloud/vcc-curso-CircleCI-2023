@@ -34,6 +34,22 @@ jobs:
           path: terraform-eks
       - terraform/plan:
           path: terraform-eks
+  eks-destroy:
+    executor: aws-cli/default
+    steps: 
+      - set_env_vars
+      - checkout
+      - aws-cli/install
+      - aws-cli/assume-role-with-web-identity:
+          role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
+          role-session-name: CCI-session
+      - run: aws sts get-caller-identity
+      - terraform_custom_init_script
+      - terraform/install
+      - terraform/validate:
+          path: terraform-eks
+      - terraform/destroy:
+          path: terraform-eks        
   eks-apply:
     executor: aws-cli/default
     steps: 
@@ -65,3 +81,11 @@ workflows:
           context: dummy
           requires: 
             - approve-apply
+      - approve-destroy:
+          type: approval
+          requires:
+            - eks-apply
+      - eks-destroy:
+          context: dummy
+          requires: 
+            - approve-destroy            
