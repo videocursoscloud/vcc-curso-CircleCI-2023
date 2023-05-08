@@ -1,0 +1,8 @@
+terraform {
+  backend "s3" {
+    bucket = "eks-cci-test-terraform-state"
+    key    = "terraform/%%ENVIRONMENT_NAME%%/terraform.tfstate"
+    region = "eu-west-1"
+    dynamodb_table = "eks-cci-test-terraform-state"
+  }
+}
