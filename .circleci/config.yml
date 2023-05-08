@@ -21,6 +21,8 @@ commands:
 jobs:
   kubernetes_test:
     executor: aws-cli/default
+    environment:
+      AWS_DEFAULT_REGION: eu-west-1
     steps:
       - kubernetes/install
       - eks/install-aws-iam-authenticator
@@ -28,8 +30,7 @@ jobs:
       - aws-cli/assume-role-with-web-identity:
           role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
           role-session-name: CCI-session
-      - aws-cli/setup:
-          aws-region: eu-west-1
+
       - eks/update-kubeconfig-with-authenticator:
           cluster-authentication-role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
           cluster-name: "vcc-cci-eks-cci-${CIRCLE_BRANCH}"
