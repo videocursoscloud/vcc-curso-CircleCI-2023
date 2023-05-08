@@ -3,8 +3,12 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@3.1.5
   terraform: circleci/terraform@3.2.1
+  kubernetes: circleci/kubernetes@1.3.1
 
 commands:
+  kubernetes_test:
+    steps:
+      - kubernetes/install
   set_env_vars:
     steps:
       - run:
