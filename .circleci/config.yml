@@ -7,6 +7,7 @@ jobs:
   aws:
     executor: aws-cli/default
     steps: 
+      - checkout
       - aws-cli/install
       - aws-cli/assume-role-with-web-identity:
           role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
