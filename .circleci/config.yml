@@ -4,11 +4,8 @@ orbs:
   aws-cli: circleci/aws-cli@3.1.5
   terraform: circleci/terraform@3.2.1
   kubernetes: circleci/kubernetes@1.3.1
-
-commands:
-  kubernetes_test:
-    steps:
-      - kubernetes/install
+  eks: circleci/aws-eks@2.2.0
+commands:           
   set_env_vars:
     steps:
       - run:
@@ -22,6 +19,17 @@ commands:
           command: ENVIRONMENT_NAME=${CIRCLE_BRANCH} bash init.sh
           working_directory: terraform-eks
 jobs:
+  kubernetes_test:
+    executor: aws-cli/default
+    steps:
+      - kubernetes/install
+      - eks/install-aws-iam-authenticator
+      - aws-cli/assume-role-with-web-identity:
+          role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
+          role-session-name: CCI-session
+      - eks/update-kubeconfig-with-authenticator:
+          cluster-authentication-role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
+          cluster-name: "vcc-cci-${CIRCLE_BRANCH}"
   eks-plan:
     executor: aws-cli/default
     steps: 
@@ -92,4 +100,6 @@ workflows:
       - eks-destroy:
           context: dummy
           requires: 
-            - approve-destroy            
+            - approve-destroy   
+      - kubernetes_test:
+          context: dummy         
