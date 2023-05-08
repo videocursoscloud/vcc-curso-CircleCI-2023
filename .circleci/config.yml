@@ -17,6 +17,7 @@ jobs:
           name: init_script
           command: ENVIRONMENT_NAME=${CIRCLE_BRANCH} bash init.sh
           working_directory: terraform-eks
+      - terraform/install
       - terraform/fmt:
           path: terraform-eks
       - terraform/plan:
