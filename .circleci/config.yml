@@ -15,7 +15,7 @@ jobs:
       - run: aws sts get-caller-identity
       - run: 
           name: init_script
-          command: bash init.sh
+          command: ENVIRONMENT_NAME=${CIRCLE_BRANCH} bash init.sh
           working_directory: terraform-eks
       - terraform/fmt:
           path: terraform-eks
