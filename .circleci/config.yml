@@ -9,7 +9,8 @@ jobs:
     steps: 
       - run:
           name: set env vars
-          command: export TF_VAR_environment_name=${CIRCLE_BRANCH}
+          command: |
+            echo 'export TF_VAR_environment_name=${CIRCLE_BRANCH}' >> $BASH_ENV
       - checkout
       - aws-cli/install
       - aws-cli/assume-role-with-web-identity:
