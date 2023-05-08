@@ -14,12 +14,12 @@ jobs:
       - run: aws sts get-caller-identity
       - run: 
           name: init_script
-          command: bash init.sh
+          command: pwd; ls ; find
           working_directory: project/terraform-eks
       - terraform/fmt:
-          path: terraform-eks
+          path: project/terraform-eks
       - terraform/plan:
-          path: terraform-eks
+          path: project/terraform-eks
 
 workflows:
   workflow1:
