@@ -5,7 +5,10 @@ module "eks" {
   cluster_version = "1.24"
 
   cluster_endpoint_public_access  = true
-  kms_key_owners = ["arn:aws:iam::620241740192:user/adminterraform"]
+  kms_key_owners = [
+    "arn:aws:iam::620241740192:user/adminterraform", 
+    "arn:aws:iam::620241740192:user/admin"
+  ]  
 
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
