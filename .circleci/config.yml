@@ -16,7 +16,7 @@ jobs:
       - run: 
           name: init_script
           command: pwd; ls ; find .
-          #working_directory: project/terraform-eks
+          working_directory: terraform-eks
       - terraform/fmt:
           path: project/terraform-eks
       - terraform/plan:
