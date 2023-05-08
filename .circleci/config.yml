@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@3.1.5
+  terraform: circleci/terraform@3.2.1
 jobs:
   aws:
     executor: aws-cli/default
@@ -11,8 +12,10 @@ jobs:
           role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
           role-session-name: CCI-session
       - run: aws sts get-caller-identity
-      - run: aws s3 ls
-
+      - terraform/plan:
+          checkout: true
+          persist-workspace: true
+          path: terraform-eks
 workflows:
   workflow1:
     jobs:
