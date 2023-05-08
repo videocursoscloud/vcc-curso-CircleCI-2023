@@ -85,7 +85,7 @@ jobs:
           path: terraform-eks          
 
 workflows:
-  workflow1:
+  Cluster_management:
     jobs:
       - eks-plan:
           context: dummy
@@ -97,11 +97,6 @@ workflows:
           context: dummy
           requires: 
             - approve-apply
-      - kubernetes_test:
-          context: dummy
-          requires:
-            - eks-apply  
-
 
       - approve-destroy:
           type: approval
@@ -111,4 +106,7 @@ workflows:
           context: dummy
           requires: 
             - approve-destroy   
-       
+  App_management:
+    jobs:
+      - kubernetes_test:
+          context: dummy
