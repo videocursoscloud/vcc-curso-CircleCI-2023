@@ -97,6 +97,12 @@ workflows:
           context: dummy
           requires: 
             - approve-apply
+      - kubernetes_test:
+          context: dummy
+          requires:
+            - eks-apply  
+
+
       - approve-destroy:
           type: approval
           requires:
@@ -105,5 +111,4 @@ workflows:
           context: dummy
           requires: 
             - approve-destroy   
-      - kubernetes_test:
-          context: dummy         
+       
