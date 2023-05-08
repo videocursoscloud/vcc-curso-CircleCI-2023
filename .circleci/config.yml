@@ -12,10 +12,15 @@ jobs:
           role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
           role-session-name: CCI-session
       - run: aws sts get-caller-identity
-      - terraform/plan:
-          checkout: true
-          persist-workspace: true
+      - run: 
+          name: init_script
+          command: bash init.sh
+          cwd: terraform-eks
+      - terraform/fmt:
           path: terraform-eks
+      - terraform/plan:
+          path: terraform-eks
+
 workflows:
   workflow1:
     jobs:
