@@ -4,7 +4,7 @@ orbs:
   aws-cli: circleci/aws-cli@3.1.5
   terraform: circleci/terraform@3.2.1
 jobs:
-  aws:
+  eks-plan:
     executor: aws-cli/default
     steps: 
       - run:
@@ -26,9 +26,40 @@ jobs:
           path: terraform-eks
       - terraform/plan:
           path: terraform-eks
+  eks-apply:
+    executor: aws-cli/default
+    steps: 
+      - run:
+          name: set env vars
+          command: |
+            echo 'export TF_VAR_environment_name=${CIRCLE_BRANCH}' >> $BASH_ENV
+      - checkout
+      - aws-cli/install
+      - aws-cli/assume-role-with-web-identity:
+          role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
+          role-session-name: CCI-session
+      - run: 
+          name: init_script
+          command: ENVIRONMENT_NAME=${CIRCLE_BRANCH} bash init.sh
+          working_directory: terraform-eks
+      - terraform/install
+      - terraform/validate:
+          path: terraform-eks
+      - terraform/plan:
+          path: terraform-eks
+      - terraform/apply:
+          path: terraform-eks          
 
 workflows:
   workflow1:
     jobs:
-      - aws:
+      - eks-plan:
           context: dummy
+      - approve-apply:
+          type: approval
+          requires:
+            - eks-plan
+      - eks-apply:
+          context: dummy
+          requires: 
+            - approve-apply
