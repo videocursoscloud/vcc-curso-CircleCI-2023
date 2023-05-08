@@ -15,7 +15,7 @@ jobs:
       - run: 
           name: init_script
           command: bash init.sh
-          working_directory: terraform-eks
+          working_directory: project/terraform-eks
       - terraform/fmt:
           path: terraform-eks
       - terraform/plan:
