@@ -3,24 +3,32 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@3.1.5
   terraform: circleci/terraform@3.2.1
+
+commands:
+  set_env_vars:
+    steps:
+      - run:
+          name: Set environment variables
+          command: |
+            echo 'export TF_VAR_environment_name=${CIRCLE_BRANCH}' >> $BASH_ENV 
+  terraform_custom_init_script:
+    steps:
+      - run:
+          name: init_script
+          command: ENVIRONMENT_NAME=${CIRCLE_BRANCH} bash init.sh
+          working_directory: terraform-eks
 jobs:
   eks-plan:
     executor: aws-cli/default
     steps: 
-      - run:
-          name: set env vars
-          command: |
-            echo 'export TF_VAR_environment_name=${CIRCLE_BRANCH}' >> $BASH_ENV
+      - set_env_vars
       - checkout
       - aws-cli/install
       - aws-cli/assume-role-with-web-identity:
           role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
           role-session-name: CCI-session
       - run: aws sts get-caller-identity
-      - run: 
-          name: init_script
-          command: ENVIRONMENT_NAME=${CIRCLE_BRANCH} bash init.sh
-          working_directory: terraform-eks
+      - terraform_custom_init_script
       - terraform/install
       - terraform/validate:
           path: terraform-eks
@@ -29,19 +37,13 @@ jobs:
   eks-apply:
     executor: aws-cli/default
     steps: 
-      - run:
-          name: set env vars
-          command: |
-            echo 'export TF_VAR_environment_name=${CIRCLE_BRANCH}' >> $BASH_ENV
+      - set_env_vars
       - checkout
       - aws-cli/install
       - aws-cli/assume-role-with-web-identity:
           role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
           role-session-name: CCI-session
-      - run: 
-          name: init_script
-          command: ENVIRONMENT_NAME=${CIRCLE_BRANCH} bash init.sh
-          working_directory: terraform-eks
+      - terraform_custom_init_script
       - terraform/install
       - terraform/validate:
           path: terraform-eks
