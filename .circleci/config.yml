@@ -28,9 +28,11 @@ jobs:
       - aws-cli/assume-role-with-web-identity:
           role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
           role-session-name: CCI-session
+      - aws-cli/setup:
+          aws-region: eu-west-1
       - eks/update-kubeconfig-with-authenticator:
           cluster-authentication-role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
-          cluster-name: "vcc-cci-${CIRCLE_BRANCH}"
+          cluster-name: "vcc-cci-eks-cci-${CIRCLE_BRANCH}"
   eks-plan:
     executor: aws-cli/default
     steps: 
