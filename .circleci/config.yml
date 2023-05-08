@@ -7,6 +7,9 @@ jobs:
   aws:
     executor: aws-cli/default
     steps: 
+      - run:
+          name: set env vars
+          command: export TF_VAR_environment_name=${CIRCLE_BRANCH}
       - checkout
       - aws-cli/install
       - aws-cli/assume-role-with-web-identity:
