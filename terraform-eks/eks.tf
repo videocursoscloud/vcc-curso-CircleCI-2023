@@ -1,11 +1,14 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 19.0"
-
-  cluster_name    = "vcc-cci-test"
+  cluster_name    = "vcc-cci-${var.project_name}-${var.environment_name}"
   cluster_version = "1.24"
 
   cluster_endpoint_public_access  = true
+  kms_key_owners = [
+    "arn:aws:iam::620241740192:user/adminterraform", 
+    "arn:aws:iam::620241740192:user/admin"
+  ]  
 
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
