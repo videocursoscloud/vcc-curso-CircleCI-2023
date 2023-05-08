@@ -18,9 +18,9 @@ jobs:
           command: pwd; ls ; find .
           working_directory: terraform-eks
       - terraform/fmt:
-          path: project/terraform-eks
+          path: terraform-eks
       - terraform/plan:
-          path: project/terraform-eks
+          path: terraform-eks
 
 workflows:
   workflow1:
