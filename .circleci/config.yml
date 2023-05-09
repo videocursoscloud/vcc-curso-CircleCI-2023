@@ -5,6 +5,7 @@ orbs:
   terraform: circleci/terraform@3.2.1
   kubernetes: circleci/kubernetes@1.3.1
   eks: circleci/aws-eks@2.2.0
+
 commands:           
   set_env_vars:
     steps:
@@ -32,7 +33,6 @@ jobs:
           role-session-name: CCI-session
 
       - eks/update-kubeconfig-with-authenticator:
-          #cluster-authentication-role-arn: arn:aws:iam::620241740192:role/CCI-OIDC-Role
           cluster-name: "vcc-cci-eks-cci-${CIRCLE_BRANCH}"
       - run:
            name: get all
@@ -68,7 +68,7 @@ jobs:
       - terraform/validate:
           path: terraform-eks
       - terraform/destroy:
-          path: terraform-eks        
+          path:   -eks        
   eks-apply:
     executor: aws-cli/default
     steps: 
@@ -111,5 +111,9 @@ workflows:
             - approve-destroy   
   App_management:
     jobs:
+      - kubernetes_test_approve:
+          type: approval
       - kubernetes_test:
           context: dummy
+          requires:
+            - kubernetes_test_approve          
