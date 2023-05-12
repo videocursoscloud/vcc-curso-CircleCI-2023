@@ -68,7 +68,7 @@ jobs:
       - terraform/validate:
           path: terraform-eks
       - terraform/destroy:
-          path:   -eks        
+          path: terraform-eks        
   eks-apply:
     executor: aws-cli/default
     steps: 
